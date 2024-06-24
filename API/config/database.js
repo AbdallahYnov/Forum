@@ -3,9 +3,9 @@ const mysql = require('mysql2');
 // Configurer la connexion à la base de données
 const db = mysql.createConnection({
   host: 'localhost',
-  user: 'root',
-  password: '', // Remplacez par votre mot de passe MySQL
-  database: 'nomduforum'
+  user: 'forum_user',
+  password: 'notrepremierforum', // Remplacez par votre mot de passe MySQL
+  database: 'forum_b1'
 });
 
 // Connecter à la base de données
