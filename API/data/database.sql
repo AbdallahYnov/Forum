@@ -1,0 +1,120 @@
+CREATE DATABASE IF NOT EXISTS forum_b1 CHARACTER SET = utf8mb4;
+
+CREATE USER IF NOT EXISTS 'forum_user'@'localhost' IDENTIFIED BY 'notrepremierforum';
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON forum_b1.* TO 'forum_user'@'localhost';
+
+CREATE TABLE Users (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    Username VARCHAR(25) NOT NULL UNIQUE,
+    Email VARCHAR(85) NOT NULL UNIQUE,
+    Password CHAR(64) NOT NULL,
+    AvatarPath VARCHAR(125),
+    Role VARCHAR(20),
+    BirthDate DATE,
+    CreatedAt DATE DEFAULT CURRENT_DATE,
+    VisitedAt DATE,
+    Bio VARCHAR(255),
+    Status VARCHAR(20)
+);
+
+CREATE TABLE Categories (
+    CategoryID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL UNIQUE,
+    CreatedAt DATE DEFAULT CURRENT_DATE,
+    UpdatedAt DATE
+);
+
+CREATE TABLE Subcategories (
+    SubcategoryID INT AUTO_INCREMENT PRIMARY KEY,
+    CategoryID INT,
+    Name VARCHAR(50) NOT NULL UNIQUE,
+    CreatedAt DATE DEFAULT CURRENT_DATE,
+    UpdatedAt DATE,
+    FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)
+);
+
+CREATE TABLE Threads (
+    ThreadID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    SubcategoryID INT,
+    Title VARCHAR(92) NOT NULL,
+    Description VARCHAR(255),
+    IsPublic BOOLEAN DEFAULT TRUE,
+    CreatedAt DATE DEFAULT CURRENT_DATE,
+    UpdatedAt DATE,
+    Status VARCHAR(20),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (SubcategoryID) REFERENCES Subcategories(SubcategoryID)
+);
+
+CREATE TABLE Posts (
+    PostID INT AUTO_INCREMENT PRIMARY KEY,
+    ThreadID INT NOT NULL,
+    UserID INT NOT NULL,
+    Content VARCHAR(1020) NOT NULL,
+    CreatedAt DATE DEFAULT CURRENT_DATE,
+    UpdatedAt DATE,
+    FOREIGN KEY (ThreadID) REFERENCES Threads(ThreadID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE Images (
+    ImageID INT AUTO_INCREMENT PRIMARY KEY,
+    PostID INT NOT NULL,
+    URL VARCHAR(255) NOT NULL,
+    FOREIGN KEY (PostID) REFERENCES Posts(PostID)
+);
+
+CREATE TABLE Messages (
+    MessageID INT AUTO_INCREMENT PRIMARY KEY,
+    SenderID INT NOT NULL,
+    ReceiverID INT NOT NULL,
+    Content TEXT NOT NULL,
+    SentDate DATE DEFAULT CURRENT_DATE,
+    FOREIGN KEY (SenderID) REFERENCES Users(UserID),
+    FOREIGN KEY (ReceiverID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE Favorites (
+    UserID INT,
+    PostID INT,
+    PRIMARY KEY (UserID, PostID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (PostID) REFERENCES Posts(PostID)
+);
+
+CREATE TABLE Tags (
+    TagID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL UNIQUE,
+    CreatedAt DATE DEFAULT CURRENT_DATE,
+    UpdatedAt DATE
+);
+
+CREATE TABLE ThreadTags (
+    ThreadID INT,
+    TagID INT,
+    PRIMARY KEY (ThreadID, TagID),
+    FOREIGN KEY (ThreadID) REFERENCES Threads(ThreadID),
+    FOREIGN KEY (TagID) REFERENCES Tags(TagID)
+);
+
+CREATE TABLE Reactions (
+    ReactionID INT AUTO_INCREMENT PRIMARY KEY,
+    PostID INT,
+    UserID INT,
+    Emoji CHAR(1) NOT NULL,
+    CreatedAt DATE DEFAULT CURRENT_DATE,
+    FOREIGN KEY (PostID) REFERENCES Posts(PostID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE Friends (
+    UserID1 INT,
+    UserID2 INT,
+    CreatedAt DATE DEFAULT CURRENT_DATE,
+    Status VARCHAR(20),
+    PRIMARY KEY (UserID1, UserID2),
+    FOREIGN KEY (UserID1) REFERENCES Users(UserID),
+    FOREIGN KEY (UserID2) REFERENCES Users(UserID)
+);
