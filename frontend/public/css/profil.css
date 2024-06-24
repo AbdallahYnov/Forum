@@ -1,0 +1,16 @@
+/* public/css/profile.css */
+main {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: left;
+}
+
+main p {
+    font-size: 1.1em;
+    color: #666;
+    margin: 10px 0;
+}

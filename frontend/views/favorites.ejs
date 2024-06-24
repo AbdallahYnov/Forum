@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favoris</title>
+    <link rel="stylesheet" href="/assets/css/favorite.css">
+    <link rel="stylesheet" href="/assets/css/header_footer.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+    <main>
+        <h1>Mes Favoris</h1>
+        <ul>
+            <% favorites.forEach(favorite => { %>
+                <li><%= favorite.title %></li>
+            <% }) %>
+        </ul>
+    </main>
+    <%- include('partials/footer') %>
+</body>
+</html>

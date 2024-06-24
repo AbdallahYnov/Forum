@@ -1,0 +1,15 @@
+/* public/css/error.css */
+main {
+    text-align: center;
+    padding: 20px;
+}
+
+main h1 {
+    font-size: 2.5em;
+    color: #333;
+}
+
+main p {
+    font-size: 1.2em;
+    color: #666;
+}
