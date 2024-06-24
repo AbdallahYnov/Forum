@@ -1,20 +1,18 @@
-const mysql = require('mysql2');
+const mysql = require('mysql');
 
-// Configurer la connexion à la base de données
-const db = mysql.createConnection({
+const connection = mysql.createConnection({
   host: 'localhost',
   user: 'forum_user',
-  password: 'notrepremierforum', // Remplacez par votre mot de passe MySQL
+  password: 'notrepremierforum',
   database: 'forum_b1'
 });
 
-// Connecter à la base de données
-db.connect(err => {
-  if (err) {
-    console.error('Error connecting to the database:', err);
-  } else {
-    console.log('Connected to MySQL Database.');
+connection.connect(error => {
+  if (error) {
+    console.error('Error connecting to the database:', error);
+    return;
   }
+  console.log('Connected to the MySQL database.');
 });
 
-module.exports = db;
+module.exports = connection;
