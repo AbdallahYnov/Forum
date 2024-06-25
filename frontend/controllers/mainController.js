@@ -2,9 +2,17 @@ const axios = require('axios');
 
 // Page d'accueil
 exports.getHomePage = async (req, res) => {
-    try {
-        const response = await axios.get('http://localhost:4000/');
-        const discussions = response.data;
+    res.render('index', {
+        title: "Accueil",
+        discussions: '',
+        stylesheets: ['/css/style.css'], // Incluez les styles nécessaires
+        scripts: [] // Ajoutez les scripts nécessaires si besoin
+    });
+/*     try {
+        console.log("debut");
+      const response = await axios.get('http://localhost:3000/');
+        const discussions = response.data; 
+        console.log("fin");
         res.render('index', {
             title: "Accueil",
             discussions,
@@ -13,7 +21,7 @@ exports.getHomePage = async (req, res) => {
         });
     } catch (error) {
         res.render('error', { message: "Erreur interne du serveur" });
-    }
+    } */
 };
 
 // Page de connexion

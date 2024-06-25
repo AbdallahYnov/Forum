@@ -30,9 +30,9 @@ app.use((req, res, next) => {
 });
 
 // Démarrage du serveur
-const PORT = process.env.PORT || 4000;
+const PORT = 8080;
 app.listen(PORT, () => {
-    console.log(`Serveur en écoute sur le port ${PORT}`);
+    console.log(`Serveur en écoute sur le port http://localhost:${PORT}`);
 });
 
 module.exports = app;
