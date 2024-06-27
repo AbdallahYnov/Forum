@@ -1,9 +1,9 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 const connection = mysql.createConnection({
   host: 'localhost',
-  user: 'forum_user',
-  password: 'notrepremierforum',
+  user: 'root',
+  password: '',
   database: 'forum_b1'
 });
 

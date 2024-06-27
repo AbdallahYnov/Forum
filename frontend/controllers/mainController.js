@@ -1,127 +1,120 @@
 const axios = require('axios');
+const multer = require('multer');
+const path = require('path');
+
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/avatars'); // Ensure this directory exists
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({ storage: storage });
 
 // Page d'accueil
 exports.getHomePage = async (req, res) => {
-    res.render('index', {
-        title: "Accueil",
-        discussions: '',
-        stylesheets: ['/css/style.css'], // Incluez les styles nécessaires
-        scripts: [] // Ajoutez les scripts nécessaires si besoin
-    });
-/*     try {
-        console.log("debut");
-      const response = await axios.get('http://localhost:3000/');
-        const discussions = response.data; 
-        console.log("fin");
+    try {
+        const response = await axios.get('http://localhost:3000/discussions');
+        const discussions = response.data;
         res.render('index', {
             title: "Accueil",
             discussions,
-            stylesheets: ['/css/style.css'], // Incluez les styles nécessaires
-            scripts: [] // Ajoutez les scripts nécessaires si besoin
+            stylesheets: ['/css/style.css'], // Include necessary styles
+            scripts: [] // Add necessary scripts
         });
     } catch (error) {
         res.render('error', { message: "Erreur interne du serveur" });
-    } */
-};
-
-// Page de connexion
-exports.getLoginPage = (req, res) => {
-    res.render('login', {
-        title: "Connexion",
-        stylesheets: ['/css/style.css'],
-        scripts: []
-    });
-};
-
-exports.loginUser = async (req, res) => {
-    const { username, password } = req.body;
-    try {
-        const response = await axios.post('http://localhost:4000/auth/login', { username, password });
-        const user = response.data;
-        req.session.user = user;
-        res.redirect('/');
-    } catch (error) {
-        res.render('login', { message: "Erreur de connexion", stylesheets: ['/css/style.css'], scripts: [] });
     }
 };
 
-// Page d'inscription
+// Register page
 exports.getRegisterPage = (req, res) => {
     res.render('register', {
-        title: "Inscription",
-        stylesheets: ['/css/style.css'],
-        scripts: []
+        title: "Register",
+        stylesheets: ['/css/register.css'], // Include necessary styles
+        scripts: [] // Add necessary scripts
     });
 };
 
+// Register user
 exports.registerUser = async (req, res) => {
-    const { username, password, email } = req.body;
     try {
-        await axios.post('http://localhost:4000/auth/register', { username, password, email });
+        const response = await axios.post('http://localhost:3000/users/register', req.body);
         res.redirect('/login');
     } catch (error) {
-        res.render('register', { message: "Erreur d'inscription", stylesheets: ['/css/style.css'], scripts: [] });
+        res.render('error', { message: "Erreur interne du serveur" });
     }
 };
 
-// Page du profil
-exports.getProfilePage = async (req, res) => {
+// Login page
+exports.getLoginPage = (req, res) => {
+    res.render('login', {
+        title: "Login",
+        stylesheets: ['/css/login.css'], // Include necessary styles
+        scripts: [] // Add necessary scripts
+    });
+};
+
+// Login user
+exports.loginUser = async (req, res) => {
     try {
-        const user = req.session.user;
-        if (!user) {
-            return res.redirect('/login');
-        }
+        const response = await axios.post('http://localhost:3000/users/login', req.body);
+        res.redirect('/profile');
+    } catch (error) {
+        res.render('error', { message: "Erreur interne du serveur" });
+    }
+};
+
+// Profile page
+exports.getProfilePage = async (req, res) => {
+    const userId = req.session.userId; // Assuming user ID is stored in session
+    try {
+        const response = await axios.get(`http://localhost:3000/users/${userId}`);
+        const user = response.data;
         res.render('profile', {
-            title: "Profil",
+            title: "Profile",
             user,
-            stylesheets: ['/css/style.css'],
-            scripts: []
+            stylesheets: ['/css/profile.css'], // Include necessary styles
+            scripts: [] // Add necessary scripts
         });
     } catch (error) {
         res.render('error', { message: "Erreur interne du serveur" });
     }
 };
 
-// Page des favoris
+// Favorites page
 exports.getFavoritesPage = async (req, res) => {
     try {
-        const user = req.session.user;
-        if (!user) {
-            return res.redirect('/login');
-        }
-        const response = await axios.get(`http://localhost:4000/users/${user.id}/favorites`);
+        const response = await axios.get('http://localhost:3000/favorites');
         const favorites = response.data;
         res.render('favorites', {
-            title: "Favoris",
+            title: "Favorites",
             favorites,
-            stylesheets: ['/css/style.css'],
-            scripts: []
+            stylesheets: ['/css/favorites.css'], // Include necessary styles
+            scripts: [] // Add necessary scripts
         });
     } catch (error) {
         res.render('error', { message: "Erreur interne du serveur" });
     }
 };
 
-// Page d'administration
-exports.getAdminPage = async (req, res) => {
-    try {
-        // Ajoutez des vérifications d'accès admin si nécessaire
-        res.render('admin', {
-            title: "Admin",
-            stylesheets: ['/css/style.css'],
-            scripts: []
-        });
-    } catch (error) {
-        res.render('error', { message: "Erreur interne du serveur" });
-    }
+// Admin page
+exports.getAdminPage = (req, res) => {
+    res.render('admin', {
+        title: "Admin",
+        stylesheets: ['/css/admin.css'], // Include necessary styles
+        scripts: [] // Add necessary scripts
+    });
 };
 
-// Gestion des erreurs
+// Error page
 exports.getErrorPage = (req, res) => {
     res.render('error', {
-        title: "Erreur",
-        message: "Quelque chose s'est mal passé. Veuillez réessayer plus tard.",
-        stylesheets: ['/css/style.css'],
-        scripts: []
+        title: "Error",
+        stylesheets: ['/css/error.css'], // Include necessary styles
+        scripts: [] // Add necessary scripts
     });
 };
