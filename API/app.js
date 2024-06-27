@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const session = require('express-session');
 const app = express();
 const port = 3000;
 
@@ -8,6 +9,14 @@ app.use(cors({
     origin: '*'
 }));
 app.use(express.json()); // To parse JSON bodies
+
+// Session management
+app.use(session({
+  secret: 'your_secret_key',  // Replace with a strong secret key
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }  // Set to true if using HTTPS
+}));
 
 // Import routes
 const userRoutes = require('./routes/users');

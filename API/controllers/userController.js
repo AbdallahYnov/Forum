@@ -1,73 +1,78 @@
 const User = require('../models/User');
 
+// Get all users
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.getAll();
-    res.status(200).json(users);
+    res.json(users);
   } catch (error) {
-    res.status(500).json({
-      message: "Internal server error",
-      error: error.message
-    });
+    res.status(500).json({ message: "Erreur interne du serveur" });
   }
 };
 
+// Get user by ID
 exports.getUserById = async (req, res) => {
-  const userId = req.params.id;
+  const userID = req.params.id;
   try {
-    const user = await User.getById(userId);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    res.status(200).json(user);
+    const user = await User.getById(userID);
+    res.json(user);
   } catch (error) {
-    res.status(500).json({
-      message: "Internal server error",
-      error: error.message
-    });
+    res.status(500).json({ message: "Erreur interne du serveur" });
   }
 };
 
+// Register user
 exports.createUser = async (req, res) => {
   try {
-    const result = await User.create(req.body);
-    res.status(201).json({ message: "User created successfully", userId: result.insertId });
+    await User.create(req.body);
+    res.status(201).json({ message: 'User created successfully' });
   } catch (error) {
-    res.status(500).json({
-      message: "Internal server error",
-      error: error.message
-    });
+    res.status(400).json({ message: "Erreur interne du serveur" });
   }
 };
 
+// Update user
 exports.updateUser = async (req, res) => {
-  const userId = req.params.id;
+  const userID = req.params.id;
   try {
-    const result = await User.update(userId, req.body);
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    res.status(200).json({ message: "User updated successfully" });
+    await User.update(userID, req.body);
+    res.json({ message: 'User updated successfully' });
   } catch (error) {
-    res.status(500).json({
-      message: "Internal server error",
-      error: error.message
-    });
+    res.status(400).json({ message: "Erreur interne du serveur" });
   }
 };
 
+// Delete user
 exports.deleteUser = async (req, res) => {
-  const userId = req.params.id;
+  const userID = req.params.id;
   try {
-    const result = await User.delete(userId);
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    res.status(200).json({ message: "User deleted successfully" });
+    await User.delete(userID);
+    res.json({ message: 'User deleted successfully' });
   } catch (error) {
-    res.status(500).json({
-      message: "Internal server error",
-      error: error.message
-    });
+    res.status(400).json({ message: "Erreur interne du serveur" });
   }
+};
+
+// Login user
+exports.loginUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.login(email, password);
+    req.session.userId = user.UserID; // Store user ID in session
+    res.json({ message: 'Login successful', user });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Logout user
+exports.logoutUser = (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      return res.status(500).json({ message: 'Failed to logout' });
+    }
+    res.clearCookie('connect.sid');
+    res.json({ message: 'Logout successful' });
+  });
 };

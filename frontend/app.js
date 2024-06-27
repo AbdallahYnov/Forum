@@ -17,9 +17,8 @@ app.use(session({ secret: 'votre_secret', resave: false, saveUninitialized: true
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-console.log(path.join(__dirname, 'frontend/public'))
 // Configuration des fichiers statiques
-app.use('/assets', express.static(path.join(__dirname, '/public')));
+app.use('/assets', express.static(path.join(__dirname, 'public')));
 
 // Utilisation des routes
 app.use('/', indexRouter);

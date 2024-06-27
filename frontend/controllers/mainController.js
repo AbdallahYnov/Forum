@@ -17,7 +17,7 @@ const upload = multer({ storage: storage });
 // Page d'accueil
 exports.getHomePage = async (req, res) => {
     try {
-        const response = await axios.get('http://localhost:3000/discussions');
+        const response = await axios.get('http://localhost:3000/categories');
         const discussions = response.data;
         res.render('index', {
             title: "Accueil",
@@ -40,14 +40,21 @@ exports.getRegisterPage = (req, res) => {
 };
 
 // Register user
-exports.registerUser = async (req, res) => {
-    try {
-        const response = await axios.post('http://localhost:3000/users/register', req.body);
-        res.redirect('/login');
-    } catch (error) {
-        res.render('error', { message: "Erreur interne du serveur" });
+exports.registerUser = [
+    upload.single('avatar'), // Handle file upload
+    async (req, res) => {
+        try {
+            const userData = req.body;
+            if (req.file) {
+                userData.avatar = req.file.filename; // Add the file name to the user data
+            }
+            await axios.post('http://localhost:3000/users/register', userData);
+            res.redirect('/login');
+        } catch (error) {
+            res.render('error', { message: "Erreur interne du serveur" });
+        }
     }
-};
+];
 
 // Login page
 exports.getLoginPage = (req, res) => {
@@ -62,15 +69,20 @@ exports.getLoginPage = (req, res) => {
 exports.loginUser = async (req, res) => {
     try {
         const response = await axios.post('http://localhost:3000/users/login', req.body);
+        const { user } = response.data;
+        req.session.userId = user.UserID; // Store user ID in session
         res.redirect('/profile');
     } catch (error) {
-        res.render('error', { message: "Erreur interne du serveur" });
+        res.render('error', { message: error.message });
     }
 };
 
 // Profile page
 exports.getProfilePage = async (req, res) => {
     const userId = req.session.userId; // Assuming user ID is stored in session
+    if (!userId) {
+        return res.redirect('/login');
+    }
     try {
         const response = await axios.get(`http://localhost:3000/users/${userId}`);
         const user = response.data;
@@ -87,8 +99,12 @@ exports.getProfilePage = async (req, res) => {
 
 // Favorites page
 exports.getFavoritesPage = async (req, res) => {
+    const userId = req.session.userId;
+    if (!userId) {
+        return res.redirect('/login');
+    }
     try {
-        const response = await axios.get('http://localhost:3000/favorites');
+        const response = await axios.get(`http://localhost:3000/favorites/${userId}`);
         const favorites = response.data;
         res.render('favorites', {
             title: "Favorites",
@@ -103,6 +119,10 @@ exports.getFavoritesPage = async (req, res) => {
 
 // Admin page
 exports.getAdminPage = (req, res) => {
+    const userId = req.session.userId;
+    if (!userId) {
+        return res.redirect('/login');
+    }
     res.render('admin', {
         title: "Admin",
         stylesheets: ['/css/admin.css'], // Include necessary styles
