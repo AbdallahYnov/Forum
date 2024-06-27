@@ -70,7 +70,9 @@ class User {
         if (results.length === 0) return reject(new Error('User not found'));
 
         const user = results[0];
-        const isMatch = await bcrypt.compare(password, user.password); // Compare hashed password
+
+
+        const isMatch = await bcrypt.compare(password, user.Password); // Compare hashed password
 
         if (!isMatch) return reject(new Error('Invalid credentials'));
         resolve(user);

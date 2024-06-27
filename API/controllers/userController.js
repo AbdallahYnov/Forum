@@ -6,7 +6,7 @@ exports.getAllUsers = async (req, res) => {
     const users = await User.getAll();
     res.json(users);
   } catch (error) {
-    res.status(500).json({ message: "Erreur interne du serveur" });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -17,7 +17,7 @@ exports.getUserById = async (req, res) => {
     const user = await User.getById(userID);
     res.json(user);
   } catch (error) {
-    res.status(500).json({ message: "Erreur interne du serveur" });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -27,7 +27,7 @@ exports.createUser = async (req, res) => {
     await User.create(req.body);
     res.status(201).json({ message: 'User created successfully' });
   } catch (error) {
-    res.status(400).json({ message: "Erreur interne du serveur" });
+    res.status(400).json({ message: "Internal server error" });
   }
 };
 
@@ -38,7 +38,7 @@ exports.updateUser = async (req, res) => {
     await User.update(userID, req.body);
     res.json({ message: 'User updated successfully' });
   } catch (error) {
-    res.status(400).json({ message: "Erreur interne du serveur" });
+    res.status(400).json({ message: "Internal server error" });
   }
 };
 
@@ -49,14 +49,13 @@ exports.deleteUser = async (req, res) => {
     await User.delete(userID);
     res.json({ message: 'User deleted successfully' });
   } catch (error) {
-    res.status(400).json({ message: "Erreur interne du serveur" });
+    res.status(400).json({ message: "Internal server error" });
   }
 };
 
 // Login user
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
-
   try {
     const user = await User.login(email, password);
     req.session.userId = user.UserID; // Store user ID in session
