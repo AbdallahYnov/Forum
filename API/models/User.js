@@ -20,6 +20,15 @@ class User {
     });
   }
 
+  static getByEmail(email) {
+    return new Promise((resolve, reject) => {
+      db.query('SELECT * FROM Users WHERE email = ?', [email], (err, results) => {
+        if (err) reject(err);
+        resolve(results[0]);
+      });
+    });
+  }
+
   static async create(userData) {
     try {
       const hashedPassword = await bcrypt.hash(userData.password, 10); // Hash the password
@@ -54,20 +63,17 @@ class User {
     });
   }
 
-  static login(email, password) {
+  static async login(email, password) {
     return new Promise((resolve, reject) => {
-      db.query('SELECT * FROM Users WHERE email = ?', [email], (err, results) => {
+      db.query('SELECT * FROM Users WHERE email = ?', [email], async (err, results) => {
         if (err) return reject(err);
         if (results.length === 0) return reject(new Error('User not found'));
 
         const user = results[0];
+        const isMatch = await bcrypt.compare(password, user.password); // Compare hashed password
 
-        bcrypt.compare(password, user.password, (err, isMatch) => {
-          if (err) return reject(err);
-          if (!isMatch) return reject(new Error('Invalid credentials'));
-
-          resolve(user);
-        });
+        if (!isMatch) return reject(new Error('Invalid credentials'));
+        resolve(user);
       });
     });
   }
