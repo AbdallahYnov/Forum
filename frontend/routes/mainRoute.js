@@ -9,6 +9,7 @@ router.post('/login', mainController.loginUser);
 router.get('/register', mainController.getRegisterPage);
 router.post('/register', mainController.registerUser);
 router.get('/profile', isAuthenticated, mainController.getProfilePage); // Protect this route
+router.post('/profile/avatar',isAuthenticated, mainController.updateAvatar);
 router.get('/favorites', isAuthenticated, mainController.getFavoritesPage); // Protect this route
 router.get('/admin', isAuthenticated, mainController.getAdminPage); // Protect this route
 router.get('/error', mainController.getErrorPage);

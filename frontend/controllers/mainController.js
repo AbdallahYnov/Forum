@@ -78,6 +78,8 @@ exports.loginUser = async (req, res) => {
 };
 
 // Profile page
+const User = require('../../API/models/User'); // Assurez-vous d'importer le modèle User
+
 exports.getProfilePage = async (req, res) => {
     const userId = req.session.userId; // Assuming user ID is stored in session
     if (!userId) {
@@ -97,6 +99,24 @@ exports.getProfilePage = async (req, res) => {
         });
     } catch (error) {
         console.log('Erreur lors de la récupération du profil utilisateur:', error);
+        res.render('error', { message: "Erreur interne du serveur" });
+    }
+};
+
+exports.updateAvatar = async (req, res) => {
+    const userId = req.session.userId;
+    if (!userId) {
+        console.log('Aucun ID utilisateur trouvé dans la session, redirection vers la page de connexion');
+        return res.redirect('/login');
+    }
+    const avatarPath = req.body.avatar;
+    try {
+        console.log(`Tentative de mise à jour de l'avatar pour l'utilisateur avec l'ID ${userId}`);
+        await axios.put(`http://localhost:3000/users/${userId}/avatar`, { avatarPath });
+        console.log('Avatar mis à jour avec succès');
+        res.redirect('/profile');
+    } catch (error) {
+        console.log('Erreur lors de la mise à jour de l\'avatar:', error);
         res.render('error', { message: "Erreur interne du serveur" });
     }
 };

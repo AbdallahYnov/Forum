@@ -15,7 +15,23 @@
         <p>Email: <%= user.Email %></p>
         <p>Bio: <%= user.Bio %></p>
         <p><img src="<%= user.AvatarPath %>" alt="Avatar de <%= user.Username %>"></p>
-       
+
+        <form action="/profile/avatar" method="post">
+            <h3>Choisir un nouvel avatar :</h3>
+            <div>
+                <input type="radio" id="avatar1" name="avatar" value="/images/avatar1.jpg" <%= user.AvatarPath === '/images/avatar1.jpg' ? 'checked' : '' %>>
+                <label for="avatar1">
+                    <img src="/images/avatar1.jpg" alt="Avatar 1" style="width: 100px; height: 100px;">
+                </label>
+            </div>
+            <div>
+                <input type="radio" id="avatar2" name="avatar" value="/images/avatar2.jpg" <%= user.AvatarPath === '/images/avatar2.jpg' ? 'checked' : '' %>>
+                <label for="avatar2">
+                    <img src="/images/avatar2.jpg" alt="Avatar 2" style="width: 100px; height: 100px;">
+                </label>
+            </div>
+            <button type="submit">Mettre à jour l'avatar</button>
+        </form>
     </main>
     <%- include('partials/footer') %>
 </body>
