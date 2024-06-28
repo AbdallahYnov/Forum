@@ -81,18 +81,22 @@ exports.loginUser = async (req, res) => {
 exports.getProfilePage = async (req, res) => {
     const userId = req.session.userId; // Assuming user ID is stored in session
     if (!userId) {
+        console.log('Aucun ID utilisateur trouvé dans la session, redirection vers la page de connexion');
         return res.redirect('/login');
     }
     try {
+        console.log(`Tentative de récupération du profil utilisateur pour l'ID ${userId}`);
         const response = await axios.get(`http://localhost:3000/users/${userId}`);
         const user = response.data;
+        console.log('Profil utilisateur récupéré avec succès:', user);
         res.render('profile', {
-            title: "Profile",
+            title: "Profil",
             user,
-            stylesheets: ['/css/profile.css'], // Include necessary styles
+            stylesheets: ['/css/profile.css', '/css/header_footer.css'], // Include necessary styles
             scripts: [] // Add necessary scripts
         });
     } catch (error) {
+        console.log('Erreur lors de la récupération du profil utilisateur:', error);
         res.render('error', { message: "Erreur interne du serveur" });
     }
 };

@@ -3,10 +3,13 @@ const User = require('../models/User');
 // Get all users
 exports.getAllUsers = async (req, res) => {
   try {
+    console.log('Tentative de récupération de tous les utilisateurs');
     const users = await User.getAll();
+    console.log('Utilisateurs récupérés avec succès:', users);
     res.json(users);
   } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
+    console.log('Erreur lors de la récupération de tous les utilisateurs:', error);
+    res.status(500).json({ message: "Erreur interne du serveur" });
   }
 };
 
@@ -14,20 +17,26 @@ exports.getAllUsers = async (req, res) => {
 exports.getUserById = async (req, res) => {
   const userID = req.params.id;
   try {
+    console.log(`Tentative de récupération de l'utilisateur avec ID ${userID}`);
     const user = await User.getById(userID);
+    console.log(`Utilisateur récupéré avec succès pour l'ID ${userID}:`, user);
     res.json(user);
   } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
+    console.log(`Erreur lors de la récupération de l'utilisateur avec ID ${userID}:`, error);
+    res.status(500).json({ message: "Erreur interne du serveur" });
   }
 };
 
 // Register user
 exports.createUser = async (req, res) => {
   try {
+    console.log('Tentative de création d\'un nouvel utilisateur avec les données:', req.body);
     await User.create(req.body);
-    res.status(201).json({ message: 'User created successfully' });
+    console.log('Utilisateur créé avec succès');
+    res.status(201).json({ message: 'Utilisateur créé avec succès' });
   } catch (error) {
-    res.status(400).json({ message: "Internal server error" });
+    console.log('Erreur lors de la création de l\'utilisateur:', error);
+    res.status(400).json({ message: "Erreur interne du serveur" });
   }
 };
 
@@ -35,10 +44,13 @@ exports.createUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
   const userID = req.params.id;
   try {
+    console.log(`Tentative de mise à jour de l'utilisateur avec ID ${userID} et les données:`, req.body);
     await User.update(userID, req.body);
-    res.json({ message: 'User updated successfully' });
+    console.log(`Utilisateur avec ID ${userID} mis à jour avec succès`);
+    res.json({ message: 'Utilisateur mis à jour avec succès' });
   } catch (error) {
-    res.status(400).json({ message: "Internal server error" });
+    console.log(`Erreur lors de la mise à jour de l'utilisateur avec ID ${userID}:`, error);
+    res.status(400).json({ message: "Erreur interne du serveur" });
   }
 };
 
@@ -46,10 +58,13 @@ exports.updateUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   const userID = req.params.id;
   try {
+    console.log(`Tentative de suppression de l'utilisateur avec ID ${userID}`);
     await User.delete(userID);
-    res.json({ message: 'User deleted successfully' });
+    console.log(`Utilisateur avec ID ${userID} supprimé avec succès`);
+    res.json({ message: 'Utilisateur supprimé avec succès' });
   } catch (error) {
-    res.status(400).json({ message: "Internal server error" });
+    console.log(`Erreur lors de la suppression de l'utilisateur avec ID ${userID}:`, error);
+    res.status(400).json({ message: "Erreur interne du serveur" });
   }
 };
 
@@ -57,10 +72,13 @@ exports.deleteUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
+    console.log(`Tentative de connexion pour l'email ${email}`);
     const user = await User.login(email, password);
+    console.log(`Utilisateur connecté avec succès:`, user);
     req.session.userId = user.UserID; // Store user ID in session
-    res.json({ message: 'Login successful', user });
+    res.json({ message: 'Connexion réussie', user });
   } catch (error) {
+    console.log(`Erreur lors de la connexion pour l'email ${email}:`, error);
     res.status(400).json({ message: error.message });
   }
 };
@@ -69,9 +87,11 @@ exports.loginUser = async (req, res) => {
 exports.logoutUser = (req, res) => {
   req.session.destroy(err => {
     if (err) {
-      return res.status(500).json({ message: 'Failed to logout' });
+      console.log('Erreur lors de la déconnexion:', err);
+      return res.status(500).json({ message: 'Échec de la déconnexion' });
     }
     res.clearCookie('connect.sid');
-    res.json({ message: 'Logout successful' });
+    console.log('Utilisateur déconnecté avec succès');
+    res.json({ message: 'Déconnexion réussie' });
   });
 };

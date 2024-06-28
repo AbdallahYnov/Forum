@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 });
 
 // Démarrage du serveur
-const PORT = 8080;
+const PORT = 8000;
 app.listen(PORT, () => {
     console.log(`Serveur en écoute sur le port http://localhost:${PORT}`);
 });

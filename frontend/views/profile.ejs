@@ -11,9 +11,11 @@
     <%- include('partials/header') %>
     <main>
         <h1>Mon Profil</h1>
-        <p>Nom d'utilisateur: <%= user.username %></p>
-        <p>Email: <%= user.email %></p>
-        <!-- Autres informations du profil -->
+        <p>Nom d'utilisateur: <%= user.Username %></p>
+        <p>Email: <%= user.Email %></p>
+        <p>Bio: <%= user.Bio %></p>
+        <p><img src="<%= user.AvatarPath %>" alt="Avatar de <%= user.Username %>"></p>
+       
     </main>
     <%- include('partials/footer') %>
 </body>
