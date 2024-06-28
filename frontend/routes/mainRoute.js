@@ -12,6 +12,8 @@ router.get('/profile', isAuthenticated, mainController.getProfilePage); // Prote
 router.post('/profile/avatar',isAuthenticated, mainController.updateAvatar);
 router.get('/favorites', isAuthenticated, mainController.getFavoritesPage); // Protect this route
 router.get('/admin', isAuthenticated, mainController.getAdminPage); // Protect this route
+router.get('/logout', isAuthenticated, mainController.logoutUser); // Route to handle logout
 router.get('/error', mainController.getErrorPage);
 
 module.exports = router;
+

@@ -23,7 +23,8 @@ exports.getHomePage = async (req, res) => {
             title: "Accueil",
             discussions,
             stylesheets: ['/css/style.css'], // Include necessary styles
-            scripts: [] // Add necessary scripts
+            scripts: [], // Add necessary scripts
+            isAuthenticated: !!req.session.userId // Pass authentication status
         });
     } catch (error) {
         res.render('error', { message: "Erreur interne du serveur" });
@@ -35,7 +36,8 @@ exports.getRegisterPage = (req, res) => {
     res.render('register', {
         title: "Register",
         stylesheets: ['/css/register.css'], // Include necessary styles
-        scripts: [] // Add necessary scripts
+        scripts: [], // Add necessary scripts
+        isAuthenticated: !!req.session.userId // Pass authentication status
     });
 };
 
@@ -61,7 +63,8 @@ exports.getLoginPage = (req, res) => {
     res.render('login', {
         title: "Login",
         stylesheets: ['/css/login.css'], // Include necessary styles
-        scripts: [] // Add necessary scripts
+        scripts: [], // Add necessary scripts
+        isAuthenticated: !!req.session.userId // Pass authentication status
     });
 };
 
@@ -78,8 +81,6 @@ exports.loginUser = async (req, res) => {
 };
 
 // Profile page
-const User = require('../../API/models/User'); // Assurez-vous d'importer le modèle User
-
 exports.getProfilePage = async (req, res) => {
     const userId = req.session.userId; // Assuming user ID is stored in session
     if (!userId) {
@@ -95,7 +96,8 @@ exports.getProfilePage = async (req, res) => {
             title: "Profil",
             user,
             stylesheets: ['/css/profile.css', '/css/header_footer.css'], // Include necessary styles
-            scripts: [] // Add necessary scripts
+            scripts: [], // Add necessary scripts
+            isAuthenticated: !!req.session.userId // Pass authentication status
         });
     } catch (error) {
         console.log('Erreur lors de la récupération du profil utilisateur:', error);
@@ -134,7 +136,8 @@ exports.getFavoritesPage = async (req, res) => {
             title: "Favorites",
             favorites,
             stylesheets: ['/css/favorites.css'], // Include necessary styles
-            scripts: [] // Add necessary scripts
+            scripts: [], // Add necessary scripts
+            isAuthenticated: !!req.session.userId // Pass authentication status
         });
     } catch (error) {
         res.render('error', { message: "Erreur interne du serveur" });
@@ -150,7 +153,8 @@ exports.getAdminPage = (req, res) => {
     res.render('admin', {
         title: "Admin",
         stylesheets: ['/css/admin.css'], // Include necessary styles
-        scripts: [] // Add necessary scripts
+        scripts: [], // Add necessary scripts
+        isAuthenticated: !!req.session.userId // Pass authentication status
     });
 };
 
@@ -159,6 +163,7 @@ exports.getErrorPage = (req, res) => {
     res.render('error', {
         title: "Error",
         stylesheets: ['/css/error.css'], // Include necessary styles
-        scripts: [] // Add necessary scripts
+        scripts: [], // Add necessary scripts
+        isAuthenticated: !!req.session.userId // Pass authentication status
     });
 };

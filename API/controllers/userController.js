@@ -92,6 +92,6 @@ exports.logoutUser = (req, res) => {
     }
     res.clearCookie('connect.sid');
     console.log('Utilisateur déconnecté avec succès');
-    res.json({ message: 'Déconnexion réussie' });
+    res.redirect('/login'); // Redirect to login page after logout
   });
 };
