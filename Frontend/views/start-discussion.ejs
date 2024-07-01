@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Démarrer une discussion</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/header_footer.css">
+    <link rel="stylesheet" href="/assets/css/start-discussion.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+    <main>
+        <h1>Démarrer une discussion</h1>
+        <p>Veuillez sélectionner un jeu pour commencer une discussion.</p>
+        <div class="game-selection">
+            <button onclick="startChat('GTA')">GTA</button>
+            <button onclick="startChat('Fortnite')">Fortnite</button>
+            <button onclick="startChat('Call of Duty')">Call of Duty</button>
+            <button onclick="startChat('Minecraft')">Minecraft</button>
+        </div>
+        <div id="chat-container" style="display: none;">
+            <h2>Discussion: <span id="game-title"></span></h2>
+            <div id="chat-box">
+                <!-- Messages will be displayed here -->
+            </div>
+            <form id="chat-form" onsubmit="sendMessage(event)">
+                <input type="text" id="message-input" placeholder="Écrire un message..." required>
+                <button type="submit">Envoyer</button>
+            </form>
+        </div>
+    </main>
+    <script src="/assets/js/chat.js"></script>
+    <%- include('partials/footer') %>
+</body>
+</html>

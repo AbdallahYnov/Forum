@@ -13,6 +13,7 @@ router.post('/profile/avatar', isAuthenticated, mainController.updateAvatar); //
 router.get('/favorites', isAuthenticated, mainController.getFavoritesPage); // Protect this route
 router.get('/admin', isAuthenticated, mainController.getAdminPage); // Protect this route
 router.get('/logout', mainController.getLogout); // Add logout route
+router.get('/start-discussion', isAuthenticated, mainController.getStartDiscussionPage); // New route for starting a discussion
 router.get('/error', mainController.getErrorPage);
 
 module.exports = router;

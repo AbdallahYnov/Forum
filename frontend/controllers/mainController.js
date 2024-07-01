@@ -181,3 +181,13 @@ exports.getErrorPage = (req, res) => {
         isAuthenticated: !!req.session.userId // Pass authentication status
     });
 };
+
+exports.getStartDiscussionPage = (req, res) => {
+    res.render('start-discussion', {
+        title: "Démarrer une discussion",
+        stylesheets: ['/css/start-discussion.css'],
+        scripts: ['/js/chat.js'],
+        isAuthenticated: !!req.session.userId // Pass authentication status
+    });
+};
+

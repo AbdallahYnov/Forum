@@ -1,0 +1,59 @@
+/* public/assets/css/start-discussion.css */
+.game-selection {
+    margin: 20px 0;
+}
+
+.game-selection button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 10px;
+}
+
+.game-selection button:hover {
+    background-color: #0056b3;
+}
+
+#chat-container {
+    margin-top: 20px;
+}
+
+#chat-box {
+    border: 1px solid #ddd;
+    padding: 10px;
+    height: 300px;
+    overflow-y: scroll;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+}
+
+#chat-form {
+    display: flex;
+}
+
+#message-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px 0 0 5px;
+}
+
+#chat-form button {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-left: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#chat-form button:hover {
+    background-color: #0056b3;
+}

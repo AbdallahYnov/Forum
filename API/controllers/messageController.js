@@ -71,3 +71,20 @@ exports.deleteMessage = async (req, res) => {
     });
   }
 };
+
+
+const messages = []; // In-memory message store for simplicity. Use a database in a real application.
+
+exports.getMessages = (req, res) => {
+    const game = req.query.game;
+    const gameMessages = messages.filter(msg => msg.game === game);
+    res.json(gameMessages);
+};
+
+exports.postMessage = (req, res) => {
+    const { game, text } = req.body;
+    const username = req.session.username || 'Anonyme'; // Use session or default to 'Anonyme'
+    const message = { game, text, username };
+    messages.push(message);
+    res.json({ success: true });
+};
