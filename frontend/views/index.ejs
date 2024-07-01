@@ -13,6 +13,22 @@
     <main>
         <h1>Bienvenue sur le Forum de Cheats de Jeux Vidéo</h1>
         <p>Découvrez des astuces, des codes, et discutez avec la communauté.</p>
+
+        <div class="carousel" id="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item">
+                    <img src="/assets/images/image1.jpg" alt="Image 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="/assets/images/image2.jpg" alt="Image 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="/assets/images/image3.jpg" alt="Image 3">
+                </div>
+            </div>
+            <button class="carousel-control prev" onclick="prevSlide('carousel')">❮</button>
+            <button class="carousel-control next" onclick="nextSlide('carousel')">❯</button>
+        </div>
         
         <section class="categories">
             <h2>Catégories Populaires</h2>
@@ -46,7 +62,31 @@
                 <p>Pas de discussions disponibles pour le moment.</p>
             </div>
         </section>
+        
+        <div class="start-discussion">
+            <button onclick="location.href='/start-discussion'">Démarrer une discussion</button>
+        </div>
+        
+        <section class="connected-users">
+            <h2>Profils Connectés</h2>
+            <div class="user-list">
+                <!-- Example profiles, replace with dynamic content -->
+                <div class="user">
+                    <img src="/assets/images/avatar1.jpg" alt="User 1">
+                    <p>Utilisateur 1</p>
+                </div>
+                <div class="user">
+                    <img src="/assets/images/avatar2.jpg" alt="User 2">
+                    <p>Utilisateur 2</p>
+                </div>
+                <div class="user">
+                    <img src="/assets/images/avatar1.jpg" alt="User 3">
+                    <p>Utilisateur 3</p>
+                </div>
+            </div>
+        </section>
     </main>
+    <script src="/assets/js/carousel.js"></script>
     <%- include('partials/footer') %>
 </body>
 </html>
