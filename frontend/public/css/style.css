@@ -13,3 +13,47 @@ main p {
     font-size: 1.2em;
     color: #666;
 }
+
+.categories, .latest-discussions {
+    margin: 40px 0;
+}
+
+.categories h2, .latest-discussions h2 {
+    font-size: 2em;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.category-list, .discussion-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.category, .discussion {
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px;
+    padding: 20px;
+    width: 200px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.category h3, .discussion h3 {
+    font-size: 1.5em;
+    color: #333;
+}
+
+.category p, .discussion p {
+    font-size: 1em;
+    color: #666;
+}
+
+.category img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}

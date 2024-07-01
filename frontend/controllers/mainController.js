@@ -1,6 +1,8 @@
 const axios = require('axios');
+const bcrypt = require('bcrypt');
 const multer = require('multer');
 const path = require('path');
+const User = require('../../API/models/User'); // Assurez-vous d'importer le modèle User
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
@@ -22,7 +24,7 @@ exports.getHomePage = async (req, res) => {
         res.render('index', {
             title: "Accueil",
             discussions,
-            stylesheets: ['/css/style.css'], // Include necessary styles
+            stylesheets: ['/css/style.css', '/css/header_footer.css', '/css/style.css'], // Include necessary styles
             scripts: [], // Add necessary scripts
             isAuthenticated: !!req.session.userId // Pass authentication status
         });
@@ -31,7 +33,8 @@ exports.getHomePage = async (req, res) => {
     }
 };
 
-// Register page
+
+// Page d'inscription
 exports.getRegisterPage = (req, res) => {
     res.render('register', {
         title: "Register",
@@ -41,7 +44,7 @@ exports.getRegisterPage = (req, res) => {
     });
 };
 
-// Register user
+// Enregistrer un utilisateur
 exports.registerUser = [
     upload.single('avatar'), // Handle file upload
     async (req, res) => {
@@ -58,7 +61,7 @@ exports.registerUser = [
     }
 ];
 
-// Login page
+// Page de connexion
 exports.getLoginPage = (req, res) => {
     res.render('login', {
         title: "Login",
@@ -68,7 +71,7 @@ exports.getLoginPage = (req, res) => {
     });
 };
 
-// Login user
+// Connecter un utilisateur
 exports.loginUser = async (req, res) => {
     try {
         const response = await axios.post('http://localhost:3000/users/login', req.body);
@@ -80,7 +83,18 @@ exports.loginUser = async (req, res) => {
     }
 };
 
-// Profile page
+// Déconnexion de l'utilisateur
+exports.getLogout = (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.redirect('/');
+        }
+        res.clearCookie('connect.sid');
+        res.redirect('/login');
+    });
+};
+
+// Page de profil
 exports.getProfilePage = async (req, res) => {
     const userId = req.session.userId; // Assuming user ID is stored in session
     if (!userId) {
@@ -123,7 +137,7 @@ exports.updateAvatar = async (req, res) => {
     }
 };
 
-// Favorites page
+// Page des favoris
 exports.getFavoritesPage = async (req, res) => {
     const userId = req.session.userId;
     if (!userId) {
@@ -144,7 +158,7 @@ exports.getFavoritesPage = async (req, res) => {
     }
 };
 
-// Admin page
+// Page d'administration
 exports.getAdminPage = (req, res) => {
     const userId = req.session.userId;
     if (!userId) {
@@ -158,7 +172,7 @@ exports.getAdminPage = (req, res) => {
     });
 };
 
-// Error page
+// Page d'erreur
 exports.getErrorPage = (req, res) => {
     res.render('error', {
         title: "Error",

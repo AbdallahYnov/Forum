@@ -6,12 +6,46 @@
     <title>Accueil</title>
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/header_footer.css">
+    <link rel="stylesheet" href="/assets/css/home.css">
 </head>
 <body>
     <%- include('partials/header') %>
     <main>
-        <h1>Bienvenue sur le Forum GTA</h1>
+        <h1>Bienvenue sur le Forum de Cheats de Jeux Vidéo</h1>
         <p>Découvrez des astuces, des codes, et discutez avec la communauté.</p>
+        
+        <section class="categories">
+            <h2>Catégories Populaires</h2>
+            <div class="category-list">
+                <div class="category">
+                    <h3>Cheats pour GTA</h3>
+                    <img src="/assets/images/gta.jpg" alt="GTA">
+                    <p>Trouvez les dernières astuces et codes pour GTA.</p>
+                </div>
+                <div class="category">
+                    <h3>Cheats pour Fortnite</h3>
+                    <img src="/assets/images/fortnite.jpg" alt="Fortnite">
+                    <p>Accédez aux astuces les plus récentes pour Fortnite.</p>
+                </div>
+                <div class="category">
+                    <h3>Cheats pour Call of Duty</h3>
+                    <img src="/assets/images/cod.jpg" alt="Call of Duty">
+                    <p>Découvrez des codes et astuces pour Call of Duty.</p>
+                </div>
+                <div class="category">
+                    <h3>Cheats pour Minecraft</h3>
+                    <img src="/assets/images/minecraft.jpg" alt="Minecraft">
+                    <p>Explorez les astuces et mods pour Minecraft.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="latest-discussions">
+            <h2>Dernières Discussions</h2>
+            <div class="discussion-list">
+                <p>Pas de discussions disponibles pour le moment.</p>
+            </div>
+        </section>
     </main>
     <%- include('partials/footer') %>
 </body>
