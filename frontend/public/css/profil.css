@@ -1,16 +1,71 @@
 /* public/css/profile.css */
 main {
-    max-width: 600px;
-    margin: 0 auto;
+    text-align: center;
     padding: 20px;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    text-align: left;
 }
 
-main p {
-    font-size: 1.1em;
-    color: #666;
+.profile-info {
+    margin-bottom: 30px;
+}
+
+.avatar {
+    margin: 20px 0;
+}
+
+.avatar img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+}
+
+.user-details p {
+    font-size: 1.2em;
     margin: 10px 0;
+}
+
+.avatar-selection {
+    margin: 30px 0;
+}
+
+.avatar-options {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.avatar-options img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.avatar-options img:hover {
+    transform: scale(1.1);
+}
+
+.avatar-options input[type="radio"] {
+    display: none;
+}
+
+.start-discussion {
+    margin-top: 40px;
+}
+
+.start-discussion button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.start-discussion button:hover {
+    background-color: #0056b3;
 }
