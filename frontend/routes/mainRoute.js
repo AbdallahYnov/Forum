@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const mainController = require('../controllers/mainController');
 const isAuthenticated = require('../middleware/auth');
+const isAdminAuthenticated = require('../middleware/adminAuth'); // Middleware to check if admin is authenticated
+
 
 router.get('/', mainController.getHomePage);
 router.get('/login', mainController.getLoginPage);
