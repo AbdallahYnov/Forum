@@ -2,12 +2,11 @@ const axios = require('axios');
 const bcrypt = require('bcrypt');
 const multer = require('multer');
 const path = require('path');
-const User = require('../../API/models/User'); // Assurez-vous d'importer le modèle User
 
-// Configure multer for file uploads
+// Configure multer for file uploads (if needed for other file uploads)
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/avatars'); // Ensure this directory exists
+        cb(null, 'uploads'); // Ensure this directory exists
     },
     filename: function (req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
@@ -29,68 +28,27 @@ exports.getHomePage = async (req, res) => {
             isAuthenticated: !!req.session.userId // Pass authentication status
         });
     } catch (error) {
-        res.render('error', { message: "Erreur interne du serveur" });
+        res.render('error', { message: "Erreur interne du serveur", title: "Error" });
     }
 };
-
 
 // Page d'inscription
 exports.getRegisterPage = (req, res) => {
     res.render('register', {
         title: "Register",
         stylesheets: ['/css/register.css'], // Include necessary styles
-        scripts: [], // Add necessary scripts
+        scripts: [],
         isAuthenticated: !!req.session.userId // Pass authentication status
     });
 };
-
-// Enregistrer un utilisateur
-exports.registerUser = [
-    upload.single('avatar'), // Handle file upload
-    async (req, res) => {
-        try {
-            const userData = req.body;
-            if (req.file) {
-                userData.avatar = req.file.filename; // Add the file name to the user data
-            }
-            await axios.post('http://localhost:3000/users/register', userData);
-            res.redirect('/login');
-        } catch (error) {
-            res.render('error', { message: "Erreur interne du serveur" });
-        }
-    }
-];
 
 // Page de connexion
 exports.getLoginPage = (req, res) => {
     res.render('login', {
         title: "Login",
         stylesheets: ['/css/login.css'], // Include necessary styles
-        scripts: [], // Add necessary scripts
+        scripts: [],
         isAuthenticated: !!req.session.userId // Pass authentication status
-    });
-};
-
-// Connecter un utilisateur
-exports.loginUser = async (req, res) => {
-    try {
-        const response = await axios.post('http://localhost:3000/users/login', req.body);
-        const { user } = response.data;
-        req.session.userId = user.UserID; // Store user ID in session
-        res.redirect('/profile');
-    } catch (error) {
-        res.render('error', { message: error.message });
-    }
-};
-
-// Déconnexion de l'utilisateur
-exports.getLogout = (req, res) => {
-    req.session.destroy(err => {
-        if (err) {
-            return res.redirect('/');
-        }
-        res.clearCookie('connect.sid');
-        res.redirect('/login');
     });
 };
 
@@ -110,12 +68,12 @@ exports.getProfilePage = async (req, res) => {
             title: "Profil",
             user,
             stylesheets: ['/css/profile.css', '/css/header_footer.css'], // Include necessary styles
-            scripts: [], // Add necessary scripts
+            scripts: [],
             isAuthenticated: !!req.session.userId // Pass authentication status
         });
     } catch (error) {
         console.log('Erreur lors de la récupération du profil utilisateur:', error);
-        res.render('error', { message: "Erreur interne du serveur" });
+        res.render('error', { message: "Erreur interne du serveur", title: "Error" });
     }
 };
 
@@ -133,7 +91,7 @@ exports.updateAvatar = async (req, res) => {
         res.redirect('/profile');
     } catch (error) {
         console.log('Erreur lors de la mise à jour de l\'avatar:', error);
-        res.render('error', { message: "Erreur interne du serveur" });
+        res.render('error', { message: "Erreur interne du serveur", title: "Error" });
     }
 };
 
@@ -150,11 +108,11 @@ exports.getFavoritesPage = async (req, res) => {
             title: "Favorites",
             favorites,
             stylesheets: ['/css/favorites.css'], // Include necessary styles
-            scripts: [], // Add necessary scripts
+            scripts: [],
             isAuthenticated: !!req.session.userId // Pass authentication status
         });
     } catch (error) {
-        res.render('error', { message: "Erreur interne du serveur" });
+        res.render('error', { message: "Erreur interne du serveur", title: "Error" });
     }
 };
 
@@ -167,8 +125,8 @@ exports.getAdminPage = (req, res) => {
     res.render('admin', {
         title: "Admin",
         stylesheets: ['/css/admin.css'], // Include necessary styles
-        scripts: [], // Add necessary scripts
-        isAuthenticated: !!req.session.userId // Pass authentication status
+        scripts: [],
+        isAuthenticated: !!req.session.userId
     });
 };
 
@@ -177,8 +135,8 @@ exports.getErrorPage = (req, res) => {
     res.render('error', {
         title: "Error",
         stylesheets: ['/css/error.css'], // Include necessary styles
-        scripts: [], // Add necessary scripts
-        isAuthenticated: !!req.session.userId // Pass authentication status
+        scripts: [],
+        isAuthenticated: !!req.session.userId
     });
 };
 
@@ -187,7 +145,6 @@ exports.getStartDiscussionPage = (req, res) => {
         title: "Démarrer une discussion",
         stylesheets: ['/css/start-discussion.css'],
         scripts: ['/js/chat.js'],
-        isAuthenticated: !!req.session.userId // Pass authentication status
+        isAuthenticated: !!req.session.userId
     });
 };
-

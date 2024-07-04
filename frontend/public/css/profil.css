@@ -1,11 +1,23 @@
-/* public/css/profile.css */
-main {
-    text-align: center;
-    padding: 20px;
+/* profile.css */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    background-color: #121212;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
 }
 
 .profile-info {
-    margin-bottom: 30px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.profile-info h1 {
+    color: #ffffff;
+    font-size: 24px;
+    text-shadow: 2px 2px 4px #000000;
 }
 
 .avatar {
@@ -13,34 +25,60 @@ main {
 }
 
 .avatar img {
+    border-radius: 50%;
     width: 150px;
     height: 150px;
-    border-radius: 50%;
-    border: 2px solid #ddd;
+    object-fit: cover;
+    border: 5px solid #6200ea;
+    box-shadow: 0 0 10px #000000;
+}
+
+.user-details {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    display: inline-block;
+    text-align: left;
+    box-shadow: 0 0 10px #000000;
 }
 
 .user-details p {
-    font-size: 1.2em;
     margin: 10px 0;
+    font-size: 14px;
+}
+
+.user-details p strong {
+    color: #ffffff;
 }
 
 .avatar-selection {
-    margin: 30px 0;
+    text-align: center;
+    margin: 40px 0;
+}
+
+.avatar-selection h3 {
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-size: 20px;
+    text-shadow: 2px 2px 4px #000000;
 }
 
 .avatar-options {
     display: flex;
     justify-content: center;
-    gap: 20px;
+}
+
+.avatar-options div {
+    margin: 0 10px;
 }
 
 .avatar-options img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    border: 2px solid #ddd;
+    border: 2px solid transparent;
     cursor: pointer;
-    transition: transform 0.3s;
+    transition: transform 0.3s ease;
 }
 
 .avatar-options img:hover {
@@ -51,21 +89,43 @@ main {
     display: none;
 }
 
+.avatar-options input[type="radio"]:checked + label img {
+    border: 2px solid #6200ea;
+    box-shadow: 0 0 10px #000000;
+}
+
+.avatar-selection button {
+    background-color: #6200ea;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.avatar-selection button:hover {
+    background-color: #3700b3;
+}
+
 .start-discussion {
-    margin-top: 40px;
+    text-align: center;
+    margin: 20px 0;
 }
 
 .start-discussion button {
-    background-color: #007bff;
+    background-color: #6200ea;
     color: #fff;
-    border: none;
     padding: 10px 20px;
-    font-size: 1.2em;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    font-family: 'Press Start 2P', cursive;
+    transition: background-color 0.3s ease;
 }
 
 .start-discussion button:hover {
-    background-color: #0056b3;
+    background-color: #3700b3;
 }

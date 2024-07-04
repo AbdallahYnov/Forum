@@ -1,33 +1,56 @@
-/* public/css/login.css */
+/* login.css */
+body.dark-theme {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 16px;
+}
+
+h1 {
+    color: #ffffff;
+    text-align: center;
+}
+
 main {
-    max-width: 400px;
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+}
+
+form {
+    background-color: #1e1e1e;
     padding: 20px;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    text-align: left;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
 }
 
-form label {
-    display: block;
-    margin: 10px 0 5px;
-}
-
-form input[type="text"], form input[type="password"] {
+label, input {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    margin: 10px 0;
 }
 
-form button {
-    width: 100%;
+input {
     padding: 10px;
-    background-color: #333;
-    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #6200ea;
+    color: #fff;
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #3700b3;
 }

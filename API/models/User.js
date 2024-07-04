@@ -118,24 +118,6 @@ class User {
       });
     });
   }
-  static async adminLogin(username, password) {
-    if (username === 'admin' && password === 'admin1234') {
-      return { UserID: 'admin', username: 'admin', isAdmin: true };
-    }
-    return new Promise((resolve, reject) => {
-      db.query('SELECT * FROM Users WHERE username = ?', [username], async (err, results) => {
-        if (err) return reject(err);
-        if (results.length === 0) return reject(new Error('User not found'));
-
-        const user = results[0];
-        const isMatch = await bcrypt.compare(password, user.password); // Compare hashed password
-
-        if (!isMatch) return reject(new Error('Invalid credentials'));
-        resolve(user);
-      });
-    });
-  }
 }
-
 
 module.exports = User;

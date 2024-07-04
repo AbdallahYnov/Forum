@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/assets/css/start-discussion.css">
 </head>
 <body>
-    <%- include('partials/header') %>
+    <%- include('partials/header', {isAuthenticated, title}) %>
     <main>
         <h1>Démarrer une discussion</h1>
         <p>Veuillez sélectionner un jeu pour commencer une discussion.</p>

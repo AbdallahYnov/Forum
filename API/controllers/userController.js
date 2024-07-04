@@ -33,6 +33,7 @@ exports.createUser = async (req, res) => {
     console.log('Tentative de création d\'un nouvel utilisateur avec les données:', req.body);
     await User.create(req.body);
     console.log('Utilisateur créé avec succès');
+    return res.redirect('/login');
     res.status(201).json({ message: 'Utilisateur créé avec succès' });
   } catch (error) {
     console.log('Erreur lors de la création de l\'utilisateur:', error);
@@ -68,17 +69,18 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
+// Connect user
 exports.loginUser = async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   try {
-    console.log(`Tentative de connexion pour le nom d'utilisateur ${username}`);
-    const user = await User.adminLogin(username, password);
+    console.log(`Tentative de connexion pour l'email ${email}`);
+    const user = await User.login(email, password);
     console.log(`Utilisateur connecté avec succès:`, user);
     req.session.userId = user.UserID; // Store user ID in session
     req.session.isAdmin = user.isAdmin || false; // Store admin status in session
-    res.json({ message: 'Connexion réussie', user });
+    res.redirect('/');
   } catch (error) {
-    console.log(`Erreur lors de la connexion pour le nom d'utilisateur ${username}:`, error);
+    console.log(`Erreur lors de la connexion pour l'email ${email}:`, error);
     res.status(400).json({ message: error.message });
   }
 };

@@ -6,14 +6,15 @@
     <title>Connexion</title>
     <link rel="stylesheet" href="/assets/css/login.css">
     <link rel="stylesheet" href="/assets/css/header_footer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="dark-theme">
     <%- include('partials/header') %>
     <main>
         <h1>Connexion</h1>
         <form action="/login" method="post">
-            <label for="email">email:</label>
-            <input type="text" id="email" name="email" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
             
             <label for="password">Mot de passe:</label>
             <input type="password" id="password" name="password" required>
